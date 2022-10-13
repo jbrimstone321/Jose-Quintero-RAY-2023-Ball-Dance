@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject endScreen;
 
+    //Loser's Screen
+    [SerializeField]
+    GameObject uDeadBoi;
+
 
     //--------------------------------------------
     Rigidbody Player;
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour
             //coins counter
             coinsLeft.text = coinsToPick.ToString();
         }
-        if(coinPurse == 12)
+        if (coinPurse == 12)
         {
             Debug.Log("Victory");
             isGameActive = false;
@@ -74,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
+
         Player.AddForce(direction, ForceMode.VelocityChange);
 
     }
@@ -93,11 +97,24 @@ public class PlayerController : MonoBehaviour
             Instantiate(coinParticles, collision.transform.position, collision.transform.rotation);
             Debug.Log("particles wewo");
         }
+
+        if (collision.gameObject.tag == "killzone")
+        {
+            Debug.Log("U ded boi");
+            isGameActive = false;
+            worldMusic.SetActive(false);
+            gameUI.SetActive(false);
+            uDeadBoi.SetActive(true);
+            coinParticles.SetActive(false);
+        }
     }
 
-    public void ClickOnButton()
-    {
-        Debug.Log("Click");
-        SceneManager.LoadScene(0);
+
+        public void ClickOnButton()
+        {
+            Debug.Log("Click");
+            SceneManager.LoadScene(0);
+        }
     }
-}
+
+
